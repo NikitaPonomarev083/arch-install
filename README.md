@@ -1,5 +1,5 @@
-# Установка Arch
-- references:
+# Установка Arch Linux
+- links:
 	- [arcwiki](https://wiki.archlinux.org/title/Installation_guide)
 
 ## Проверка соединения
@@ -13,16 +13,17 @@
 ## Разметка диска
 1. `lsblk` или `fdisk -l` для просмотра существующей ФС.
 2. `cfdisk` - команда для создания ФС.
-
+```
 Пример разметки:
-- *EFI раздел* - 350M, EFI System (для установки единственной системой)
-- *Раздел подкачки* - 4G, Linix swap
-- `/` - все остальное свободное место, Linux filesystem
+- **EFI раздел** - 350M, EFI System (для установки единственной системой)
+- **Раздел подкачки** - 4G, Linix swap
+- **/** - все остальное свободное место, Linux filesystem
+```
 
 ## Создание ФС
 1. EFI - `mkfs.fat -F32 /dev/_efi_system_partition_`
 2. `/` - `mkfs.ext4 /dev/_root_partition_`
-3. Раздел подкачки - `mkswap /dev/_swap_partition_` и 
+3. Раздел подкачки - `mkswap /dev/_swap_partition_` 
 
 ## Монтирование разделов
 1. `/` - `mount /dev/_root_partition_ /mnt`
@@ -30,7 +31,7 @@
 3. EFI - `mount --mkdir /dev/_efi_system_partition_ /mnt/boot`
 
 ## Установка основных пакетов с помощью утилиты pacstrap
-1. `pacstrap -i /mnt base linux linux-firmware intel-ucode`
+1. `pacstrap -i /mnt base linux linux-firmware intel-ucode nano git`
 
 ## Создание fstab для автоматического монтирования дисков при загрузке
 1. `genfstab -U /mnt >> /mnt/etc/fstab`
@@ -42,37 +43,39 @@
 
 ### Выбор таймзоны
 1. `ln -sf /usr/share/zoneinfo/Asia/Krasnoyarsk /etc/localtime`
-2. `date` - для проверки времени
-3. `hwclock --systohc` 
+2. `hwclock --systohc` 
+3. `date` для проверки времени
 
-### Локали
+### Настройка локалей и раскладки клавиатуры
 
 **Способ 1:**
-	1. `nano /etc/locale.gen` 
-	2. Откоментировать `еn_US.UTF-8 UTF-8` и `ru_RU.UTF-8 UTF-8`
+1. `nano /etc/locale.gen`
+2. Откоментировать строки `еn_US.UTF-8 UTF-8` и `ru_RU.UTF-8 UTF-8`
 
 **Способ 2:**
-	1. `echo "еn_US.UTF-8 UTF-8" >> /etc/locale.gen`
-	2. `echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen`
+1. `echo "еn_US.UTF-8 UTF-8" >> /etc/locale.gen`
+2. `echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen`
 
-2. `locale-gen`
-3. `echo "LANG=ru_RU.UTF-8" > /etc/locale.conf`
-4. `echo "KEYMAP=ru" > /etc/vconsole.conf`
-5. `echo "FONT=cyr-sun16" >> /etc/vconsole.conf`
+3. `locale-gen`
+4. `echo "LANG=ru_RU.UTF-8" > /etc/locale.conf`
+5. `echo "KEYMAP=ru" > /etc/vconsole.conf`
+6. `echo "FONT=cyr-sun16" >> /etc/vconsole.conf`
 
 ### Создание hostname и hosts
 1. `nano /etc/hostname` - записать имя компьютера 
-2. `nano /etc/hosts` записать туда:
-	127.0.0.1    localhost
-	::1          localhost
-	127.0.1.1    ИмяПК.localdomain    ИмяПК
+2. `nano /etc/hosts` 
+3. Записать туда:
+```bash
+127.0.0.1    localhost # 4 пробела
+::1          localhost # 10 пробелов
+127.0.1.1    ИмяПК.localdomain    ИмяПК # 4 пробела
+```
 
 ### Создание пользователей и их паролей
 1. `passwd` - пароль для root'а
 2. `useradd -m -G wheel,audio,video,storage -s /bin/bash имя_пользователя`
-	1. `-g users`
-	2. `passwd username` - задание пароля для нового пользователя
-3. `EDITOR=nano visudo`
+3. `passwd имя_пользователя` - задание пароля для нового пользователя
+4. `EDITOR=nano visudo`
 	1. Откоментировать строчку с `%wheel ALL=(ALL) ALL`
 	2. Или добавить пользователя в формате `Имя_пользователя ALL=(ALL) ALL`
 
@@ -85,14 +88,13 @@
 5. `grub-mkconfig -o /boot/grub/grub.cfg`
 
 **Dual boot:**
-
 1. `mkdir /boot/efi`
 2. `mount /dev/_windows_efi_system_partition_ /boot/efi`
 3. `pacman -S grub efibootmgr dosfstools mtools`
 
 **Вариант 1:**
 4. `nano /etc/default/grub`
-    откоментить строку \#GRUB_DISABLE_OS_PROBER=false
+откоментить строку \#GRUB_DISABLE_OS_PROBER=false
 5. `pacman -S os-prober`
 6. `grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck`
 7. `grub-mkconfig -o /boot/grub/grub.cfg`
@@ -100,15 +102,18 @@
 **Вариант 2:**
 4. `sudo nano /etc/grub.d/40_custom`
 Вписать:
+```bash
 submenu "Windows 10" {
  regexp -s root '\((.+)\)' "$cmdpath"
  chainloader /EFI/Microsoft/Boot/bootmgfw.efi
 }
+```
+
 5. `grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck`
 6. `grub-mkconfig -o /boot/grub/grub.cfg`
 
 ## Reboot и тест
-1. `exit` - выход из chroot'a
+1. `exit`
 2. `umount -R /mnt`
 3. `reboot`
 
@@ -117,16 +122,15 @@ submenu "Windows 10" {
 ### Настройка reflector
 
 Список зеркал находится в /etc/pacman.d/mirrorlist
+Настройки pacman'а находятся в /etc/pacman.conf
 
-`$ sudo nano /etc/pacman.conf`
 `$ sudo pacman -S reflector rsync curl`
-`$ cd /etc/pacman.d`
-`$ sudo cp mirrorlist mirrorlist.bak`
+`$ sudo cp /etc/pacman.d/mirrorlist mirrorlist.bak`
 `$ sudo reflector -a 20 --sort rate --save /etc/pacman.d/mirrorlist`
-`$ sudo pacman -Syyy`
+`$ sudo pacman -Syy`
 `$ systemctl enable reflector.timer`
 
-`$ cat /etc/xdg/reflector/reflector.conf`
+`$ cat /etc/xdg/reflector/reflector.conf` для просмотра отсортированных зеркал
 
 ### Настройка firewalld
 `$ sudo pacman –S firewalld`
@@ -150,7 +154,7 @@ submenu "Windows 10" {
 Для того, чтобы не забывать обновлять initramfs после обновления nvidia, вы можете использовать pacman hook следующим образом:
 
 `$ sudo nano /etc/pacman.d/hooks/nvidia.hook`
-
+```bash
 [Trigger]
 Operation=Install
 Operation=Upgrade
@@ -159,7 +163,7 @@ Type=Package
 Target=nvidia
 Target=linux
 
-Измените "linux" в строках Target и Exec, если вы используете другое ядро
+# Измените "linux" в строках Target и Exec, если вы используете другое ядро
 
 [Action]
 Description=Update Nvidia module in initcpio
@@ -168,7 +172,8 @@ When=PostTransaction
 NeedsTargets
 Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'
 
-Пропишите в `Target` тот пакет, который вы установили в шагах выше (то есть `nvidia`, `nvidia-dkms`,`nvidia-lts` или `nvidia-ck-_что-нибудь_`).
+#Пропишите в `Target` тот пакет, который вы установили в шагах выше (то есть `nvidia`, `nvidia-dkms`,`nvidia-lts` или `nvidia-ck-_что-нибудь_`).
+```
 
 ### Установка DE
 

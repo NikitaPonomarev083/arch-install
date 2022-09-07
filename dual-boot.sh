@@ -16,24 +16,15 @@ echo "::1          localhost" >> /etc/hosts
 echo "127.0.1.1    arch.localdomain    arch" >> /etc/hosts
 echo root:passwd | chpasswd
 
-pacman -S reflector rsync curl
-cp /etc/pacman.d/mirrorlist mirrorlist.bak
-reflector -a 20 --sort rate --save /etc/pacman.d/mirrorlist
-pacman -Syy
-
-pacman -S nano sudo grub efibootmgr networkmanager firewalld nvidia nvidia-utils alsa-lib alsa-utils pulseaudio
+pacman -S nano sudo grub efibootmgr networkmanager dosfstools mtools ntfs-3g os-prober
 
 mkdir /boot/efi
-mount /dev/_efi_system_partition_ /boot/efi
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --removable
+mount /dev/_windows_efi_system_partition_ /boot/efi
+echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
+grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 
 systemctl enable NetworkManager
-systemctl enable --now firewalld
-
-firewall-cmd --add-port=1025-65535/tcp --permanent
-firewall-cmd --add-port=1025-65535/udp --permanent
-firewall-cmd --reload
 
 useradd -m user
 echo user:passwd | chpasswd
