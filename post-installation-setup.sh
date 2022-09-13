@@ -1,14 +1,11 @@
-# Установка и настройка reflector'а
-pacman -S reflector rsync curl
-cp /etc/pacman.d/mirrorlist mirrorlist.bak
-reflector -a 20 --sort rate --save /etc/pacman.d/mirrorlist
-pacman -Syy
+pacman -S reflector rsync curl network-manager-applet nvidia nvidia-utils nvidia-settings alsa-lib alsa-utils pulseaudio fakeroot base-devel
 
-
-pacman -S network-manager-applet nvidia nvidia-utils alsa-lib alsa-utils pulseaudio
+git clone https://aur.archlinux.org/yay.git ~lain/
+cd ~lain/yay
+makepkg -si 
 
 sudo firewall-cmd --add-port=1025-65535/tcp --permanent
 sudo firewall-cmd --add-port=1025-65535/udp --permanent
 sudo firewall-cmd --reload
 
-mkdir ~/.{themes,icons,fonts}
+mkdir ~user/.{themes,icons,fonts}

@@ -1,4 +1,6 @@
-sudo pacman -S xorg xorg-xinit bspwm sxhkd kitty nitrogen thunar kwrite firefox 
+sudo pacman -S xorg xorg-xinit bspwm sxhkd kitty nitrogen thunar kwrite firefox lightdm lightdm-gtk-greeter
+
+sudo systemctl enable lightdm
 
 cat > /etc/X11/xorg.conf.d/00-keyboard.conf << "EOF"
 Section "InputClass"
