@@ -1,7 +1,7 @@
-pacman -S bash-completion curl rsync reflector terminus-font dialog base-devel linux-headers nvidia nvidia-utils xorg xorg-xinit lightdm lightdm-gtk-greeter
+sudo pacman -S bash-completion curl rsync reflector terminus-font dialog base-devel linux-headers nvidia nvidia-utils 
 
-cp /etc/pacman.d/mirrorlist mirrorlist.bak
-reflector -a 20 --sort rate --save /etc/pacman.d/mirrorlist
+sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+sudo reflector -a 20 --sort rate --save /etc/pacman.d/mirrorlist
 pacman -Syy
 
 # internet
@@ -11,7 +11,7 @@ pacman -Syy
 # pacman -S bluez bluez-utils
 
 # audio
-# pacman -S alsa-lib alsa-utils pulseaudio pipewire pipewire-alsa pipewire-pulse pipewire-jack sof-firmware
+pacman -S alsa-lib alsa-utils pulseaudio #pipewire pipewire-alsa pipewire-pulse pipewire-jack sof-firmware
 
 # power managment
 # pacman -S acpi acpi_call acpid tlp
@@ -23,32 +23,23 @@ pacman -Syy
 # pacman -S gvfs gvfs-smb virt-manager qemu qemu-arch-extra edk2-ovmf vde2
 
 ### YAY ###
-git clone https://aur.archlinux.org/yay.git ~user/
-cd ~user/yay
-makepkg -si
+#git clone https://aur.archlinux.org/yay.git ~user/
+#cd ~user/yay
+#makepkg -si
 
 sudo firewall-cmd --add-port=1025-65535/tcp --permanent
 sudo firewall-cmd --add-port=1025-65535/udp --permanent
 sudo firewall-cmd --reload
 
-sudo systemctl enable lightdm
+
 # systemctl enable bluetooth
 # systemctl enable cups.service
 # systemctl enable sshd
 # systemctl enable avahi-daemon
 # systemctl enable tlp 
-systemctl enable reflector.timer
+sudo systemctl enable reflector.timer
 # systemctl enable libvirtd
 # systemctl enable acpid
 
 mkdir ~user/.{themes,icons,fonts}
 
-cat > /etc/X11/xorg.conf.d/00-keyboard.conf << "EOF"
-Section "InputClass"
-    Identifier "system-keyboard"
-    MatchIsKeyboard "on"
-    Option "XkbLayout" "us,ru"
-    Option "XkbModel" "pc105"
-    Option "XkbOptions" "grp:alt_shift_toggle"
-EndSection
-EOF

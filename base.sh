@@ -2,10 +2,10 @@
 
 user=
 hostname=
+root_passwd=
+passwd=
 
-###################################
 ### TIME AND LOCALES ###
-###################################
 ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
 hwclock --systohc
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
@@ -22,7 +22,7 @@ echo "$hostname" >> /etc/hostname
 echo "127.0.0.1    localhost" >> /etc/hosts
 echo "::1          localhost" >> /etc/hosts
 echo "127.0.1.1    $hostname.localdomain    $hostname" >> /etc/hosts
-echo root:passwd | chpasswd
+echo root:$root_passwd | chpasswd
 
 
 ### PACKAGES ###
@@ -56,7 +56,7 @@ systemctl enable fstrim.timer
 
 ### NEW USER AND SUDO ###
 useradd -m $user
-echo $user:passwd | chpasswd
+echo $user:$passwd | chpasswd
 usermod -aG audio,video,storage $user
 
 echo "$user ALL=(ALL) ALL" >> /etc/sudoers.d/$user
