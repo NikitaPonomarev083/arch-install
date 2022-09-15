@@ -4,6 +4,7 @@ user=
 hostname=
 root_passwd=
 passwd=
+efi_system_partition=
 
 ### TIME AND LOCALES ###
 ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
@@ -37,7 +38,7 @@ pacman -S sudo grub efibootmgr networkmanager firewalld
 
 ### GRUB ###
 mkdir /boot/efi
-mount /dev/_efi_system_partition_ /boot/efi
+mount /dev/$efi_system_partition /boot/efi
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --removable
 grub-mkconfig -o /boot/grub/grub.cfg
 
