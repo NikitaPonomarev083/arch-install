@@ -1,15 +1,4 @@
-
 sudo pacman -S bspwm sxhkd kitty nitrogen thunar firefox dmenu xorg xorg-xinit lightdm lightdm-gtk-greeter 
-
-sudo cat > /etc/X11/xorg.conf.d/00-keyboard.conf << "EOF"
-Section "InputClass"
-    Identifier "system-keyboard"
-    MatchIsKeyboard "on"
-    Option "XkbLayout" "us,ru"
-    Option "XkbModel" "pc105"
-    Option "XkbOptions" "grp:alt_shift_toggle"
-EndSection
-EOF
 
 echo -e "exec sxhkd & \nexec bspwm" >> .xinitrc
 

@@ -5,9 +5,12 @@ hostname=
 root_passwd=
 passwd=
 efi_system_partition=
+windows_efi_system_partition_
+Region=
+City=
 
 ### TIME AND LOCALES ###
-ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
+ln -sf /usr/share/zoneinfo/$Region/$City /etc/localtime
 hwclock --systohc
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen

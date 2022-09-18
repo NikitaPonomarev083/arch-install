@@ -1,8 +1,14 @@
+#sudo timedatectl set-ntp true
+
+#sudo echo "Color" >> /etc/pacman.conf
+#sudo echo "VerbosePkgLists" >> /etc/pacman.conf
+#sudo echo "ParrallelDownloads = 10" >> /etc/pacman.conf
+
 sudo pacman -S bash-completion curl rsync reflector terminus-font dialog base-devel linux-headers nvidia nvidia-utils 
 
-sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
-sudo reflector -a 20 --sort rate --save /etc/pacman.d/mirrorlist
-pacman -Syy
+#sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+#sudo reflector -a 20 --sort rate --save /etc/pacman.d/mirrorlist
+#pacman -Syy
 
 # internet
 # pacman -S inetutils dnsutils network-manager-applet openssh openbsd-netcat iptables-nft ipset avahi nfs-utils nss-mdns wpa_supplicant bridge-utils dnsmasq
@@ -41,5 +47,5 @@ sudo systemctl enable reflector.timer
 # systemctl enable libvirtd
 # systemctl enable acpid
 
-mkdir ~user/.{themes,icons,fonts}
+mkdir ~/.{themes,icons,fonts}
 
