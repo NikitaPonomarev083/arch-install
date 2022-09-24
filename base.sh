@@ -4,8 +4,8 @@ user=
 hostname=
 root_passwd=
 passwd=
-efi_system_partition=
-windows_efi_system_partition_
+efi_system_partition= #sda1
+#windows_efi_system_partition= #sda1
 Region=
 City=
 
