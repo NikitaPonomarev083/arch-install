@@ -1,23 +1,17 @@
-sudo pacman -S xorg xorg-xinit kitty nitrogen ranger firefox lightdm lightdm-gtk-greeter dmenu
+sudo pacman -S --noconfirm xorg xorg-xinit kitty nitrogen ranger firefox dmenu
 
-sudo systemctl enable lightdm
+#sudo pacman -S --noconfirm lightdm lightdm-gtk-greeter
 
-cat > /etc/X11/xorg.conf.d/00-keyboard.conf << "EOF"
-Section "InputClass"
-    Identifier "system-keyboard"
-    MatchIsKeyboard "on"
-    Option "XkbLayout" "us,ru"
-    Option "XkbModel" "pc105"
-    Option "XkbOptions" "grp:alt_shift_toggle"
-EndSection
-EOF
-
-git clone https://aur.archlinux.org/yay.git ~lain/
-cd ~lain/yay
-makepkg -si 
+cp /etc/X11/xinit/xinitrc ~/.xinitrc
 
 sudo firewall-cmd --add-port=1025-65535/tcp --permanent
 sudo firewall-cmd --add-port=1025-65535/udp --permanent
 sudo firewall-cmd --reload
 
-mkdir ~user/.{themes,icons,fonts}
+mkdir ~/.{themes,icons,fonts}
+
+git clone https://github.com/bakkeby/dwm-flexipatch
+
+echo "exec dwm" >> ~/.xinitrc
+
+#sudo systemctl enable lightdm
