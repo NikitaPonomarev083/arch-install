@@ -1,10 +1,5 @@
-### PACMAN ###
-echo "Color" | sudo tee -a /etc/pacman.conf > /dev/null
-echo "VerbosePkgLists" | sudo tee -a /etc/pacman.conf > /dev/null
-echo "ParrallelDownloads = 10" | sudo tee -a /etc/pacman.conf > /dev/null
-
 ### PACKAGES ###
-sudo pacman -S bash-completion curl rsync reflector terminus-font dialog base-devel linux-headers nvidia nvidia-utils nvidia-settings
+sudo pacman -S --noconfirm bash-completion curl rsync reflector terminus-font dialog base-devel linux-headers nvidia nvidia-utils nvidia-settings
 
 # internet
 # sudo pacman -S inetutils dnsutils network-manager-applet openssh openbsd-netcat iptables-nft ipset avahi nfs-utils nss-mdns wpa_supplicant bridge-utils dnsmasq
@@ -14,7 +9,7 @@ sudo pacman -S bash-completion curl rsync reflector terminus-font dialog base-de
 
 # audio
 # pulseaudio
-sudo pacman -S alsa-lib alsa-utils pulseaudio
+sudo pacman -S --noconfirm alsa-lib alsa-utils pulseaudio
 #pipewire
 #sudo pacman -S pipewire pipewire-alsa pipewire-pulse pipewire-jack sof-firmware
 
@@ -27,13 +22,13 @@ sudo pacman -S alsa-lib alsa-utils pulseaudio
 # cups
 # sudo pacman -S gvfs gvfs-smb virt-manager qemu qemu-arch-extra edk2-ovmf vde2
 
-# fonts
+# fonts, icons, themes, wallpapers
 mkdir ~/.{themes,icons,fonts}
 
-sudo pacman -S dina-font tamsyn-font bdf-unifont ttf-bitstream-vera ttf-croscore ttf-dejavu ttf-droid gnu-free-fonts ttf-ibm-plex ttf-liberation ttf-linux-libertine noto-fonts ttf-roboto tex-gyre-fonts ttf-ubuntu-font-family ttf-anonymous-pro ttf-cascadia-code ttf-fantasque-sans-mono ttf-fira-mono ttf-hack ttf-fira-code ttf-inconsolata ttf-jetbrains-mono ttf-monofur adobe-source-code-pro-fonts cantarell-fonts inter-font ttf-opensans gentium-plus-font ttf-junicode adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts noto-fonts-cjk noto-fonts-emoji
+sudo pacman -S --noconfirm dina-font tamsyn-font bdf-unifont ttf-bitstream-vera ttf-croscore ttf-dejavu ttf-droid gnu-free-fonts ttf-ibm-plex ttf-liberation ttf-linux-libertine noto-fonts ttf-roboto tex-gyre-fonts ttf-ubuntu-font-family ttf-anonymous-pro ttf-cascadia-code ttf-fantasque-sans-mono ttf-fira-mono ttf-hack ttf-fira-code ttf-inconsolata ttf-jetbrains-mono ttf-monofur adobe-source-code-pro-fonts cantarell-fonts inter-font ttf-opensans gentium-plus-font ttf-junicode adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts noto-fonts-cjk noto-fonts-emoji arc-gtk-theme arc-icon-theme archlinux-wallpaper
 
 ### YAY ###
-#git clone https://aur.archlinux.org/yay.git ~/
+#git clone https://aur.archlinux.org/yay.git ~/yay
 #cd ~/yay
 #makepkg -si
 
