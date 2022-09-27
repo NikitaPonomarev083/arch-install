@@ -47,7 +47,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 ### GRUB FOR DUALBOOT ###
 # mkdir /boot/efi
-# mount /dev/_windows_efi_system_partition_ /boot/efi
+# mount /dev/$windows_efi_system_partition /boot/efi
 # echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
 # grub-install --target=x86_64-efi --bootloader-id=GRUB --recheck
 # grub-mkconfig -o /boot/grub/grub.cfg
