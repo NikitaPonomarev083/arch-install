@@ -4,8 +4,8 @@ user=
 hostname=
 root_passwd=
 passwd=
-efi_system_partition= #sda1
-#windows_efi_system_partition= #sda1
+#efi_system_partition=sda1
+#windows_efi_system_partition=sda1
 Region=
 City=
 
@@ -17,9 +17,9 @@ echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
 
 ### LANGUAGE SETUP ###
-echo "LANG=ru_RU.UTF-8" >> /etc/locale.conf
-echo "KEYMAP=ru" >> /etc/vconsole.conf
-echo "FONT=cyr-sun16" >> /etc/vconsole.conf
+# echo "LANG=ru_RU.UTF-8" >> /etc/locale.conf
+# echo "KEYMAP=ru" >> /etc/vconsole.conf
+# echo "FONT=cyr-sun16" >> /etc/vconsole.conf
 
 ###  HOSTNAME  HOSTS ###
 echo "$hostname" >> /etc/hostname
@@ -49,7 +49,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 # mkdir /boot/efi
 # mount /dev/$windows_efi_system_partition /boot/efi
 # echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
-# grub-install --target=x86_64-efi --bootloader-id=GRUB --recheck
+# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --recheck
 # grub-mkconfig -o /boot/grub/grub.cfg
 
 
