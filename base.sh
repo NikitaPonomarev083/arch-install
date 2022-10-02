@@ -46,12 +46,11 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB 
 grub-mkconfig -o /boot/grub/grub.cfg
 
 ### GRUB FOR DUALBOOT ###
-# mkdir -p /boot/efi
+# mkdir /boot/efi
 # mount /dev/$windows_efi_system_partition /boot/efi
 # echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
-# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --recheck
+# grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --recheck
 # grub-mkconfig -o /boot/grub/grub.cfg
-
 
 ### SERVICES ###
 systemctl enable NetworkManager
