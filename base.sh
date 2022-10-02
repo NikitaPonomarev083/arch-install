@@ -31,13 +31,13 @@ echo root:$root_passwd | chpasswd
 
 ### PACKAGES ###
 # general
-pacman -S sudo grub efibootmgr networkmanager firewalld
+pacman -S --noconfirm sudo grub efibootmgr networkmanager firewalld
 
 # packages for vm
-# pacman -S xdg-utils xdg-user-dirs virtualbox-guest-utils 
+# pacman -S --noconfirm xdg-utils xdg-user-dirs virtualbox-guest-utils 
 
 # for dualboot
-# pacman -S mtools dosfstools os-prober ntfs-3g
+# pacman -S --noconfirm mtools dosfstools os-prober ntfs-3g
 
 ### GRUB ###
 mkdir /boot/efi
@@ -66,7 +66,3 @@ usermod -aG audio,video,storage $user
 echo "$user ALL=(ALL) ALL" >> /etc/sudoers.d/$user
 
 printf "\e[1;32mDone! Type exit, umount -a and reboot.\e[0m"
-
-
-
-
